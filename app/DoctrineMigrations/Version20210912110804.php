@@ -1,27 +1,28 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Application\Migrations;
 
-use AppBundle\Entity\DynamicContent;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20191021000000_home_dynamic_content extends AbstractMigration implements ContainerAwareInterface
+final class Version20210912110804 extends AbstractMigration
 {
-
-    use ContainerAwareTrait;
+    public function getDescription() : string
+    {
+        return '';
+    }
 
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql("INSERT INTO dynamic_content (code, name, description, content) VALUES ('HOME', 'Page d\'accueil', 'Bandeau sur la page d\'accueil d\'un membre connect\u00e9', '')");
+        $this->addSql('ALTER TABLE event ADD anonymous_proxy TINYINT(1) DEFAULT \'0\'');
     }
 
     public function down(Schema $schema) : void
@@ -29,6 +30,6 @@ final class Version20191021000000_home_dynamic_content extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql("DELETE FROM dynamic_content WHERE code = 'HOME'");
+        $this->addSql('ALTER TABLE event DROP anonymous_proxy');
     }
 }
